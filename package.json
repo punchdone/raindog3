@@ -1,10 +1,13 @@
 {
-  "name": "surf-shop",
-  "version": "0.0.0",
+  "name": "RW Raindog v3",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node index.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+  },
+  "engines": {
+    "node": "12.14.0"
   },
   "dependencies": {
     "@mapbox/mapbox-sdk": "^0.7.0",

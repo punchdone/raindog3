@@ -1,0 +1,61 @@
+
+		  #map {
+			width: 300px;
+			height: 200px;
+		  }
+	
+		.marker {
+		  background-image: url('/images/mapbox-icon.png');
+		  background-size: cover;
+		  width: 50px;
+		  height: 50px;
+		  border-radius: 50%;
+		  cursor: pointer;
+		}
+	
+		.mapboxgl-popup {
+  			max-width: 200px;
+		}
+
+		.mapboxgl-popup-content {
+		  text-align: center;
+		  font-family: 'Open Sans', sans-serif;
+		}
+
+div .selection-title {
+	text-align: center;
+}
+
+.ind-title {
+	text-align: left;
+	margin-bottom: 3px;
+}
+
+.finish-select {
+	margin-top: 30px;
+}
+
+.form-check {
+	text-align: left;
+}
+
+#project-return-btn {
+    position: absolute;
+    right: 20px;
+}
+
+.product-select {
+	width: 100px;
+}
+
+tr input {
+	width: 100%;
+}
+
+#inputFEL, #inputFER {
+	width: 50px;
+}
+
+.notes-row, .add-notes-row, .add-mod-note, .add-mod, .edit-cabinet-row, .edit-notes-row, .edit-mod-line, .edit-mod-note-line {
+	display: none;
+}

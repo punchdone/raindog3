@@ -1,0 +1,231 @@
+<% layout('layouts/boilerplate') -%>
+
+<link rel='stylesheet' href='/stylesheets/product-select.css' />
+
+<div class="container">
+	
+		<hr>
+		ProjectId: <%= projectId %><br>
+		RoomId: <%= roomId %><br>
+		OrderId: <%= orderId %>
+		<hr>
+	
+		<h1>
+			<%= product.title %>
+		</h1>
+		<h3>
+			<%= product.cabtype.code %><%= product.configuration %>
+		</h3>
+		<hr>
+		<div>
+			Images: <br>
+			<% product.images.forEach(function(image) { %>
+			<img src="<%= image.url %>" alt="Product Image" width="200px">
+			<% }); %>
+		</div>
+		<hr>
+		<div>
+			Documents: <br>
+			<% product.docs.forEach(function(doc) { %>
+				<img src=""<%= doc.url %> alt="Product Doc" width="200"px> 
+			<% }) %>
+		</div>
+		<hr>
+	
+	
+	<div class="product-table">
+		<div class="d-flex flex-row">
+			<table class="table">
+				<thead class="thead-dark">
+					<tr>
+						<th class="config" scope="col">Config Code</th>
+						<th class="description" scope="col">Description</th>
+						<th class="quantity" scope="col">Quantity</th>
+						<th class="hinging" scope="col">Hinging</th>
+						<th class="FEL" scope="col">Left End</th>
+						<th class="FER" scope="col">Right End</th>
+						<th class="cabwidth" scope="col">Width</th>
+						<th class="cabheight" scope="col">Height</th>
+						<th class="cabdepth" scope="col">Depth</th>
+						<th></th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<div class="entry-form">
+					<form id="subline-add-form" action="/projects/<%= projectId %>/rooms/<%= roomId %>/orders/<%= orderId %>/lines/subadd" method="POST">
+					<form id="line-form" action="/projects/<%= projectId %>/rooms/<%= roomId %>/orders/<%= orderId %>/lines" method="POST">
+					<tr>
+							<th scope="row"><%= product.cabtype.code %><%= product.configuration %></th>
+							<td><%= product.title %></td>
+							<td width="7%"><input type="number" class="inputQuantity" name="quantity" step="1" value=1 size="4"></td>
+							<td>
+								<% if(product.hinging === true) { %>
+									<select>
+										<option value="L">Left</option>
+										<option value="R">Right</option>
+									</select>
+								<% }; %>
+							</td>
+							<td>
+								<select class="inputEndLeft" name="fin_left" id="fin_left">
+									<option value="UN" selected>Unfinshed</option>
+									<option value="FE">Finished</option>
+									<option value="AP">Applied Panel</option>
+									<option value="AD">Applied Door</option>
+									<option value="PL">Panelized end</option>
+								</select>
+							</td>
+							<td>
+								<select class="inputEndRight" name="fin_right" id="fin_right">
+									<option value="UN" selected>Unfinshed</option>
+									<option value="FE">Finished</option>
+									<option value="AP">Applied Panel</option>
+									<option value="AD">Applied Door</option>
+									<option value="PL">Panelized end</option>
+								</select>
+							</td>
+							<td>
+								<% if(product.widthfix === true) { %>
+									<%= product.widthstd %>
+								<% } else { %>
+									<input type="number" class="inputWidth" name="width" value="<%= product.widthstd %>" size="4">
+								<% }; %>
+							</td>
+							<td>
+								<% if(product.heightfix === true) { %>
+									<%= product.heightstd %>
+								<% } else { %>
+									<input type="number" class="inputHeight" name="height" value="<%= product.heightstd %>" size="4">
+								<% }; %>
+							</td>
+							<td>
+								<% if(product.depthfix === true) { %>
+									<%= product.depthstd %>
+								<% } else { %>
+									<input type="number" class="inputDepth" name="depth" value="<%= product.depthstd %>" size="4">
+								<% }; %>
+							</td>
+							<td>
+								<button type="button" id="#toggle-note" class="toggle-note-form btn btn-primary mt-1">
+									Add Note
+								</button><br>
+								<input type="submit" form="subline-add-form" class="btn btn-primary mt-1" value="Add Mod/Accessory" />
+								
+							</td>
+						
+					</tr>
+				
+					<tr class="new-note-form">
+							<td colspan="9">
+								<textarea name="notes" rows="4" cols="80"></textarea>
+							</td>
+							<td colspan="1">
+							</td>
+					</tr>
+					</form>
+					</form>
+					
+					<tr class="subline-form">
+						<form action="/" method="GET" class="new-subline-form">
+						<td colspan="2">
+							<select class="accessoryPulldown" name="accessory" id="accessory">
+							<% accessories.forEach(function(accessory) { %>
+								<option value="<%= accessory._id %>"><%= accessory.cabtype.code %><%= accessory.configuration %>-<%= accessory.title %></option>
+							<% }) %>
+							</select>
+						</td>
+						<td><input type="number" class="inputQuantity" name="subQuantity" id="accessoryQuantity" step="1" value=1></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td>
+							<% if(product.widthfix === true) { %>
+								<%= product.widthstd %>
+							<% } else { %>
+								<input class="inputWidth" type="number" name="subWidth" id="accessoryWidth" value="<%= product.widthstd %>">
+							<% }; %>
+						</td>
+						<td>
+							<% if(product.heightfix === true) { %>
+								<%= product.heightstd %>
+							<% } else { %>
+								<input class="inputHeight" type="number" name="subHeight" id="accessoryHeight" value="<%= product.heightstd %>">
+							<% }; %>
+						</td>
+						<td>
+							<% if(product.depthfix === true) { %>
+								<%= product.depthstd %>
+							<% } else { %>
+								<input class="inputDepth" type="number" name="subDepth" id="accessoryDepth" value="<%= product.depthstd %>">
+							<% }; %>
+						</td>
+						<td>
+							<button type="button" class="btn btn-primary" id="btn-subline-add">
+								Add Mod/Accessory
+							</button>
+						</td>
+						</form>
+					</tr>
+					</div>
+				
+					
+				</tbody>
+				
+			</table>
+		</div>
+	</div>
+	<hr>
+	<div class="d-flex flex-row">
+		<input type="submit" form="line-form" class="btn btn-primary mr-1" value="Create Line" />
+		<a href='/catalog/products'>
+			<button class="btn btn-primary mr-1">Catalog</button>
+		</a>
+		<a href="/projects/<%= projectId %>/rooms/<%= roomId %>/orders/<%= orderId%>">
+			<button class="btn btn-primary">View Cart</button>
+		</a>
+	</div>
+</div>
+	
+<script>
+$('.toggle-note-form').on('click', function() {
+	// toggle the edit button text on click
+	$(this).text() === 'Edit' ? $(this).text('Cancel') : $(this).text('Edit');
+	// toggle visibility of the edit room form
+	$(this).closest('.table').find('.new-note-form').toggle();
+});	
+$("form[name='line-form']").submit(function(e) {
+	// toggle the edit button text on click
+	$(this).text() === 'Edit' ? $(this).text('Cancel') : $(this).text('Edit');
+	// toggle visibility of the edit room form
+	$(this).closest('.table').find('.subline-form').toggle();
+	e.preventDefault();
+	var formData = $(this).serialize();
+	alert(formData);
+	console.log(formData);
+});
+$(function() {
+	$('#btn-subline-add').click(function() {
+		var _modId = $('#accessory').val();
+		var hashIndex = _modId.indexOf("-");
+		var _modId_cabtype = _modId.slice(0,1);
+		var _modId_config = _modId.slice(1,hashIndex);
+		var _modId_description = _modId.slice(hashIndex+1,_modId.length);
+		var _modQ = $('#accessoryQuantity').val();
+		var _modW = $('#accessoryWidth').val();
+		var _modH = $('#accessoryHeight').val();
+		var _modD = $('#accessoryDepth').val();
+		
+		var tr = '<tr class="subline-line"><td>+'+ _modId_cabtype + _modId_config +'</td><td>'+ _modId_description +'</td><td>'+ _modQ +'</td><td></td><td></td><td></td><td>'+ _modW +'</td><td>'+ _modH +'</td><td>'+ _modD +'</td><td></td></tr>'
+		
+		$('table').append(tr);
+	});
+});
+
+</script>
+	
+	
+	
+	
+
+

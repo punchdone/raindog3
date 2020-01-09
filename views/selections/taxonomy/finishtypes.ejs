@@ -1,0 +1,44 @@
+<% layout('./layouts/selection-list') -%>
+
+<h1>
+	Finishes Type Index!
+</h1>
+
+<% finishtypes.forEach(function(finishtype) { %>
+	<div>
+		<ul>
+			<%= finishtype.title %><br>
+			<%= finishtype.rate %>
+			<div>
+				<button class="toggle-edit-form">Edit</button>
+
+				<div class="edit-list-form">
+					<form action="/finishtype/<%= finishtype.id %>?_method=PUT" method="POST">
+						Finish Type: <textarea name="title" required><%= finishtype.title %></textarea>
+						Rate: <input type="number" name="rate" min="0.00" step="0.01" value="<%= finishtype.rate %>"/>
+						<input type="submit" value="Update">
+					</form>
+					<form action="/finishtypes/<%= finishtype.id %>?_method=DELETE" method="POST">
+						<input type="submit" value="Delete">
+					</form>
+				</div>
+			</div>
+		</ul>
+	</div>
+<% }); %>
+
+<h3>
+	New Finish
+</h3>
+
+<form action="/finishtypes" method="POST">
+	
+	<div>Finish Type: <input type="text" name="title" placeholder="Finish"><br>
+	Rate: <input type="number" name="rate" min="0.00" step="0.01" />
+	</div>
+	
+
+	<input type="submit">
+</form>
+
+<script src="/javascripts/project-show.js"></script>

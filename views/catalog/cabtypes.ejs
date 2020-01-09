@@ -1,0 +1,41 @@
+<% layout('./layouts/catalog-list') -%>
+
+<h1>
+	<%= title %>
+</h1>
+
+<% cabtypes.forEach(function(cabtype) { %>
+	<div>
+		<ul>
+			<%= cabtype.code %> - <%= cabtype.title %> <button class="toggle-edit-form">Edit</button>
+				<div class="edit-list-form">
+					<form action="/catalog/cabtypes/<%= cabtype.id %>?_method=PUT" method="POST">
+						Code: <input type="text" name="code" required>
+						Description: <input type="text" name="title" required><%= cabtype.title %></input>
+						
+						<input type="submit" value="Update">
+					</form>
+					<form action="/catalog/cabtypes/<%= cabtype.id %>?_method=DELETE" method="POST">
+						<input type="submit" value="Delete">
+					</form>
+				</div>
+		</ul>
+	</div>
+<% }); %>
+
+<h3>
+	New Cabinet Type
+</h3>
+
+<form action="/catalog/cabtypes" method="POST">
+	
+	<div>
+		<input type="text" name="code" placeholder="Cabinet Type Code">
+		<input type="text" name="title" placeholder="Description">
+	</div>
+	
+	<input type="submit">
+</form>
+
+<!-- <script src="/javascripts/catalog-show.js"></script> -->
+

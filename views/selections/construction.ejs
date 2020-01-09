@@ -1,0 +1,40 @@
+<% layout('./layouts/selection-list') -%>
+
+<h1>
+	Construction Index!
+</h1>
+
+<% construction.forEach(function(construction) { %>
+	<div>
+		<ul>
+			<%= construction.title %>
+			<div>
+				<button class="toggle-edit-form">Edit</button>
+
+				<div class="edit-list-form">
+					<form action="/construction/<%= construction.id %>?_method=PUT" method="POST">
+						<textarea name="title" required><%= construction.title %></textarea>
+						<input type="submit" value="Update">
+					</form>
+					<form action="/construction/<%= construction.id %>?_method=DELETE" method="POST">
+						<input type="submit" value="Delete">
+					</form>
+				</div>
+			</div>
+		</ul>
+	</div>
+<% }); %>
+
+<h3>
+	New Construction Method
+</h3>
+
+<form action="/construction" method="POST">
+	
+	<div><input type="text" name="title" placeholder="Construction"></div>
+	
+	
+	<input type="submit">
+</form>
+
+<script src="/javascripts/project-show.js"></script>

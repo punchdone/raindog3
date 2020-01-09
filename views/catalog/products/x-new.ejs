@@ -1,0 +1,75 @@
+<!-- <% layout('layouts/boilerplate') -%>
+
+<h1>
+	New Product!
+</h1>
+ -->
+<form action="/catalog/products" method="POST" enctype="multipart/form-data">
+	
+	<div>
+		Cabinet Type:
+			<select name="product[cabtype]" id="product[cabtype]">
+				<% cabtypes.forEach(function(cabtype) { %>
+							<option value="<%= cabtype._id %>"><%= cabtype.code %>-<%= cabtype.title %></option>
+				<% }) %>
+			</select>
+	</div>
+	<div><input type="text" name="product[configuration]" placeholder="Configuration Code"></div>
+	<div><input type="text" name="product[title]" placeholder="Description"></div>
+	<div>
+		<input type="file" accept="images/*" name="images" multiple />
+	</div><br>
+	Hinging Required: <input type="checkbox" name="product[hinging]" value="product[hinging]">
+	<hr>
+	<div>
+		<h2>
+			Dimensions
+		</h2><br>
+		<table>
+			<tr>
+				<th></th>
+				<th>Width</th>
+				<th>Height</th>
+				<th>Depth</th>
+			</tr>
+			<tr>
+				<td>Standard</td>
+				<td><input type="text" name="product[widthstd]" placeholder="Standard Width"></td>
+				<td><input type="text" name="product[heightstd]" placeholder="Standard Height"></td>
+				<td><input type="text" name="product[depthstd]" placeholder="Standard Depth"></td>
+			</tr>
+			<tr>
+				<td>Fix Dimension</td>
+				<td><input type="checkbox" name="product[widthfix]" value="product[widthfix]"></td>
+				<td><input type="checkbox" name="product[heightfix]" value="product[heightfix]"></td>
+				<td><input type="checkbox" name="product[depthfix]" value="product[depthfix]"></td>
+			</tr>
+			<tr>
+				<td>Minimum</td>
+				<td><input type="text" name="product[widthmin]" placeholder="Minimum Width"></td>
+				<td><input type="text" name="product[heightmin]" placeholder="Minimum Height"></td>
+				<td><input type="text" name="product[depthmin]" placeholder="Minimum Depth"></td>
+			</tr>
+			<tr>
+				<td>Maximum</td>
+				<td><input type="text" name="product[widthmax]" placeholder="Maximum Width"></td>
+				<td><input type="text" name="product[heightmax]" placeholder="Maximum Height"></td>
+				<td><input type="text" name="product[depthmax]" placeholder="Maximum Depth"></td>
+			</tr>
+		</table>
+	</div>
+	<hr>
+		Top Drawer (Qty): <input type="number" name="product[topdrawer]" value="product[topdrawer]"><br>
+		Lower Drawer (Qty): <input type="number" name="product[lowerdrawer]" value="product[lowerdrawer]"><br>
+		Door (Qty): <input type="number" name="product[door]" value="product[door]"><br>
+		Shelves (Qty): <input type="number" name="product[shelves]" value="product[shelves]"><br>
+		Partitions (Qty): <input type="number" name="product[partitions]" value="product[partitions]"><br>
+		Finished Interior: <input type="checkbox" name="product[finint]" value="product[finint]"><br>
+		Face Frame: <input type="checkbox" name="product[faceframe]" value="product[faceframe]"><br>
+		Faces (Qty): <input type="number" name="product[faces]" value="product[faces]"><br>
+		Angles (Qty): <input type="number" name="product[angles]" value="product[angles]"><br>
+		Price: <input type="number" min="0.00" step="any" name="product[price]" value="product[price]"><br>
+		Notes:<br>
+		<textarea name="product[notes]" rows="4" cols="60"></textarea><br>
+	<input type="submit">
+</form>

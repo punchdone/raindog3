@@ -1,0 +1,52 @@
+<% layout('./layouts/selection-list') -%>
+
+<h1>
+	Drawerbox Index!
+</h1>
+
+<% drawerboxes.forEach(function(drawerbox) { %>
+	<div>
+		<ul>
+			<%= drawerbox.title %>
+			<div>
+				<button class="toggle-edit-form">Edit</button>
+
+				<div class="edit-list-form">
+					<form action="/drawerboxes/<%= drawerbox.id %>?_method=PUT" method="POST">
+						<input type="text" name="title" value="<%= drawerbox.title %>" />
+						Fixed Rate: <input type="number" name="fixedRate" min="0.0000" step="0.0001" value="<%= drawerbox.fixedRate %>"/>
+						Variable Rate: <input type="number" name="variableRate" min="0.0000" step="0.0001" value="<%= drawerbox.variableRate %>"/>
+						Bottom Rate: <input type="number" name="bottomRate" min="0.0000" step="0.0001" value="<%= drawerbox.bottomRate %>"/>
+						<input type="submit" value="Update">
+					</form>
+					<form action="/drawerboxes/<%= drawerbox.id %>?_method=DELETE" method="POST">
+						<input type="submit" value="Delete">
+					</form>
+				</div>
+			</div>
+		</ul>
+	</div>
+<% }); %>
+
+<h3>
+	New Drawerbox
+</h3>
+
+<form action="/drawerboxes" method="POST">
+	
+	<div>
+		Drawer Type: <input type="text" name="title" placeholder="Drawerbox" required><br>
+		Fixed Rate: <input type="number" name="fixedRate" min="0.0000" step="0.0001" required/><br>
+		Variable Rate: <input type="number" name="variableRate" min="0.0000" step="0.0001" required/><br>
+		Bottom Rate: <input type="number" name="bottomRate" min="0.0000" step="0.0001" required/>
+	</div>
+	
+	
+	
+	<input type="submit">
+</form>
+<p>
+Drawer box costs start with a base rate and then add a SF variable rate for the sidewalls with an 80% yield and a SF rate for the bottoms, also with a 80% yield.
+</p>
+
+<script src="/javascripts/project-show.js"></script>

@@ -1,0 +1,47 @@
+.subline-form {
+	display: none;
+}
+
+.new-note-form {
+	display: none;
+}
+
+.config {
+	width: 8%;
+}
+
+.description {
+	width: 20%;
+}
+
+.quantity {
+	width: 8%;
+}
+
+.hinging {
+	width: 8%;
+}
+
+.FEL {
+	width: 8%;
+}
+
+.FER {
+	width: 8%;
+}
+
+.inputQuantity {
+	width: 50px;
+}
+
+.inputWidth, .inputHeight, .inputDepth {
+	width: 50px;
+}
+
+.inputEndLeft, .inputEndRight {
+	width: 50px;
+}
+
+.accessoryPulldown {
+	width: 250px;
+}

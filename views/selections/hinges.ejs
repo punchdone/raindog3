@@ -1,0 +1,44 @@
+<% layout('./layouts/selection-list') -%>
+
+<h1>
+	Hinges Index!
+</h1>
+
+<% hinges.forEach(function(hinge) { %>
+	<div>
+		<ul>
+			<%= hinge.title %>
+			<div>
+				<button class="toggle-edit-form">Edit</button>
+
+				<div class="edit-list-form">
+					<form action="/hinges/<%= hinge.id %>?_method=PUT" method="POST">
+						Type: <input type="text" name="title" value="<%= hinge.title %>" />
+						Cost: <input type="number" name="rate" min="0.0000" step="0.0001" value="<%= hinge.rate %>"/>
+						<input type="submit" value="Update">
+					</form>
+					<form action="/hinges/<%= hinge.id %>?_method=DELETE" method="POST">
+						<input type="submit" value="Delete">
+					</form>
+				</div>
+			</div>
+		</ul>
+	</div>
+<% }); %>
+
+<h3>
+	New Hinge/Material
+</h3>
+
+<form action="/hinges" method="POST">
+	
+	<div>
+	Type: <input type="text" name="title" placeholder="Hinge">
+	Cost: <input type="number" name="rate" min="0.0000" step="0.0001" required/><br>
+	</div>
+	
+	
+	<input type="submit">
+</form>
+
+<script src="/javascripts/project-show.js"></script>

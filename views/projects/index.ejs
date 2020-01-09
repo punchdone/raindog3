@@ -1,0 +1,28 @@
+<% layout('layouts/boilerplate') -%>
+
+<div class="container">
+	
+	<h1 class="pt-4">
+		Projects Index!
+	</h1>
+
+	<% include ../partials/paginateProjects %>
+
+	<% projects.docs.forEach(function(project) { %>
+		<div>
+			<div>Project#: <%= project.projectId %></div>
+			<h2><%= project.title %></h2>
+			<div>Channel: <%= project.channel %></div>
+			<div><%= project.description %></div>
+			<div>Location: <%= project.location %></div>
+			<div>
+				<a href="/projects/<%= project.id %>">View More</a>
+			</div>
+		</div>
+		<hr>
+	<% }); %>
+	
+
+	<% include ../partials/paginateProjects %>
+	
+</div>

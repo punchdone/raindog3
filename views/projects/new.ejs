@@ -1,0 +1,134 @@
+<% layout('layouts/boilerplate') -%>
+
+<div class="container">
+	
+	<h1>
+		New Project Form
+	</h1>
+
+	<form action="/projects" method="POST" enctype="multipart/form-data">
+
+		<div class="form-group">
+			<label for="title">Project Name</label>
+			<input type="text" name="project[title]" class="form-control" placeholder="The project name we should use">
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="inputEmail">Email</label>
+				<input type="email" class="form-control" id="inputEmail" name="project[email]" placeholder="Email">
+			</div>
+			<div class="form-group col-md-6">
+				<label for="inputPhone">Phone:</label>
+				<input type="text" class="form-control" maxlength="14" name="project[phone]" id="inputPhone" placeholder="(XXX) XXX-XXXX" />
+			</div>
+		</div>
+		
+		  <div class="form-group">
+			<label for="inputAddress">Address</label>
+			<input type="text" class="form-control" id="inputAddress" name="project[address1]" placeholder="1234 Main St">
+		  </div>
+		  <div class="form-group">
+			<label for="inputAddress2">Address 2</label>
+			<input type="text" class="form-control" id="inputAddress2" name="project[address2]" placeholder="Apartment, studio, or floor">
+		  </div>
+		  <div class="form-row">
+			<div class="form-group col-md-6">
+			  <label for="inputCity">City</label>
+			  <input type="text" class="form-control" id="inputCity" name="project[location]">
+			</div>
+			<div class="form-group col-md-4">
+			  <label for="inputState">State</label>
+			  <select id="inputState" class="form-control" name="project[state]">
+				<option selected>WA</option>
+				<option>OR</option>
+				<option>CA</option>
+				<option>ID</option>
+				<option>MT</option>
+				<option>AK</option>
+				<option>HI</option>
+			  </select>
+			</div>
+			<div class="form-group col-md-2">
+			  <label for="inputZip">Zip</label>
+			  <input type="text" class="form-control" id="inputZip" name="project[zip]">
+			</div>
+		  </div>
+		  
+		
+			Attach project photos, appliance specifications, etc.:
+			<div>
+				<input type="file" accept="images/*" name="images" multiple />
+			</div>
+			<br>
+			<div class="form-group">
+				<div class="form-check">
+				  	<input class="form-check-input" type="checkbox" id="gridCheck" name="project[terms]">
+				  	<label class="form-check-label" for="gridCheck">
+						Check to indicate you agree to the terms and conditions.
+				  	</label>
+				</div>
+			</div>
+
+		<input class="btn btn-primary mt-2" type="submit">
+	</form>
+
+<script>
+	$('#inputPhone')
+
+	.keydown(function (e) {
+		var key = e.which || e.charCode || e.keyCode || 0;
+		$phone = $(this);
+
+    // Don't let them remove the starting '('
+    if ($phone.val().length === 1 && (key === 8 || key === 46)) {
+			$phone.val('('); 
+      return false;
+		} 
+    // Reset if they highlight and type over first char.
+    else if ($phone.val().charAt(0) !== '(') {
+			$phone.val('('+String.fromCharCode(e.keyCode)+''); 
+		}
+
+		// Auto-format- do not expose the mask as the user begins to type
+		if (key !== 8 && key !== 9) {
+			if ($phone.val().length === 4) {
+				$phone.val($phone.val() + ')');
+			}
+			if ($phone.val().length === 5) {
+				$phone.val($phone.val() + ' ');
+			}			
+			if ($phone.val().length === 9) {
+				$phone.val($phone.val() + '-');
+			}
+		}
+
+		// Allow numeric (and tab, backspace, delete) keys only
+		return (key == 8 || 
+				key == 9 ||
+				key == 46 ||
+				(key >= 48 && key <= 57) ||
+				(key >= 96 && key <= 105));	
+	})
+	
+	.bind('focus click', function () {
+		$phone = $(this);
+		
+		if ($phone.val().length === 0) {
+			$phone.val('(');
+		}
+		else {
+			var val = $phone.val();
+			$phone.val('').val(val); // Ensure cursor remains at the end
+		}
+	})
+	
+	.blur(function () {
+		$phone = $(this);
+		
+		if ($phone.val() === '(') {
+			$phone.val('');
+		}
+	});
+</script>
+	
+	

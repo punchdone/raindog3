@@ -1,0 +1,485 @@
+<% layout('layouts/order-show-layout') %>
+
+<div class="container">
+	
+
+<h1>
+	Order
+</h1>
+<hr>
+
+<form action="/projects/<%= projectDetails[0]._id %>/rooms/<%= roomId %>/orders/<%= orderId %>?_method=PUT" method="POST">
+	
+				<div class="d-flex flex-row">
+					<div class="d-flex flex-column col-md-8">
+						Order #:  <%= order.orderId %><br>
+						Proposal #: <%= projectDetails[0].projectId %>-<%= roomDetails[0].room_number.toString().padStart(2, '0') %><br>
+						Project Name: <%= projectDetails[0].channel %>/<%= projectDetails[0].title %><br>
+						Room/Spec Group:  <%= roomDetails[0].room_name %><br>
+						<hr>
+						Project Id:  <%= projectDetails[0]._id %><br>
+						Room Id:  <%= roomDetails[0]._id %><br>
+						Order Id: <%= order.id %><br>
+						<hr>
+					</div>
+					<div class="d-flex flex-column col-md-4">
+						<a href='/projects/<%= projectDetails[0]._id %>'>
+							<button id="project-return-btn" class="btn btn-primary">
+								Return to Project
+							</button>	
+						</a>
+					</div>
+				</div>
+	
+				<div class="d-flex flex-row">
+					<div class="selection-title d-flex flex-column col-md-6">
+						<h3>Case Selections</h3>
+						<div class="d-flex flex-row">
+							<div class="ind-title d-flex flex-column col-md-4">
+								Wood/Material:
+							</div>
+							<div class="d-flex flex-column col-md-8">
+								<select name="wood" id="Wood">
+								<% woods.forEach(function(wood) { %>
+									<option value="<%= wood._id %>"><%= wood.title %></option>
+								<% }) %>
+								</select>
+							</div>
+						</div>
+						<div class="d-flex flex-row">
+							<div class="ind-title d-flex flex-column col-md-4">
+								Case Contruction:
+							</div>
+							<div class="d-flex flex-column col-md-8">
+								<select name="construction" id="Construction">
+								<% constructions.forEach(function(construction) { %>
+									<option value="<%= construction._id %>"><%= construction.title %></option>
+								<% }) %>
+								</select>
+							</div>
+						</div>
+						<div class="d-flex flex-row">
+							<div class="ind-title d-flex flex-column col-md-4">
+								Interior:
+							</div>
+							<div class="d-flex flex-column col-md-8">
+								<select name="interior" id="Interior">
+								<% interiors.forEach(function(interiors) { %>
+									<option value="<%= interiors._id %>"><%= interiors.title %></option>
+								<% }) %>
+								</select>
+							</div>
+						</div>
+						<div class="d-flex flex-row">
+							<div class="ind-title d-flex flex-column col-md-4">
+								Drawer Box:
+							</div>
+							<div class="d-flex flex-column col-md-8">
+								<select name="drawerbox" id="Drawerbox">
+								<% drawerboxes.forEach(function(drawerbox) { %>
+									<option value="<%= drawerbox._id %>"><%= drawerbox.title %></option>
+								<% }) %>
+								</select>
+							</div>
+						</div>
+						<div class="d-flex flex-row">
+							<div class="ind-title d-flex flex-column col-md-4">
+								Hinges:
+							</div>
+							<div class="d-flex flex-column col-md-8">
+								<select name="hinge" id="Hinge">
+								<% hinges.forEach(function(hinge) { %>
+									<option value="<%= hinge._id %>"><%= hinge.title %></option>
+								<% }) %>
+								</select>
+							</div>
+						</div>
+						<div class="d-flex flex-row">
+							<div class="ind-title d-flex flex-column col-md-4">
+								Guides:
+							</div>
+							<div class="d-flex flex-column col-md-8">
+								<select name="guide" id="Guide">
+								<% guides.forEach(function(guide) { %>
+									<option value="<%= guide._id %>"><%= guide.title %></option>
+								<% }) %>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="selection-title d-flex flex-column col-md-6">
+						<h3>Door and Finish Selections</h3>
+						<div class="d-flex flex-row">
+							<div class="ind-title d-flex flex-column col-md-4">
+								Door Style:
+							</div>
+							<div class="d-flex flex-column col-md-8">
+								<select name="door" id="Door">
+								<% doors.forEach(function(door) { %>
+									<option value="<%= door._id %>"><%= door.title %></option>
+								<% }) %>
+								</select>
+							</div>
+						</div>
+						<div class="d-flex flex-row">
+							<div class="ind-title d-flex flex-column col-md-4">
+								Top Drawer:
+							</div>
+							<div class="d-flex flex-column col-md-8">
+								<div class="form-check">
+								  <input class="form-check-input" type="radio" name="topdrawer" id="slab" value="slab">
+								  <label class="form-check-label" for="slab">
+									Slab Top Drawer
+								  </label>
+								</div>
+								<div class="form-check">
+								  <input class="form-check-input" type="radio" name="topdrawer" id="deco" value="deco">
+								  <label class="form-check-label" for="deco">
+									5-piece/Decorative Top Drawer (+$65 recessed only)
+								  </label>
+								</div>
+							</div>
+						</div>
+						<div class="d-flex flex-row">
+						</div>
+						<div class="finish-select d-flex flex-row">
+							<div class="ind-title d-flex flex-column col-md-4">
+								Finish:
+							</div>
+							<div class="d-flex flex-column col-md-8">
+								<select name="finish" id="Finish">
+								<% finishes.forEach(function(finish) { %>
+									<option value="<%= finish._id %>"><%= finish.title %></option>
+								<% }) %>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+	<input type="submit" class="btn btn-primary btn-md mt-3" value="Confirm Selections">
+</form>
+<hr>
+	
+<!-- Display the order lines here -->
+	
+	<table class="table" id="orderLinesTable">
+		<thead class="thead-dark">
+			<th scope="col">Configuration</th>
+			<th scope="col">Description</th>
+			<th scope="col">Quantity</th>
+			<th scope="col">Hinging</th>
+			<th scope="col">Left End</th>
+			<th scope="col">Right End</th>
+			<th scope="col">Width</th>
+			<th scope="col">Height</th>
+			<th scope="col">Depth</th>
+			<th scope="col">Price</th>
+			<th scope="col"></th>
+		</thead>
+		<tbody>
+			<% order.lines.forEach(function(line) { %>
+			<tr class="cabinet-line">
+				<td><%= line.product.cabtype.code %><%= line.product.configuration %><br>
+					ProductId: <%= line.product._id %><br>
+					LineId: <%= line._id %></td>
+				<td><%= line.product.title %></td>
+				<td><%= line.quantity %></td>
+				<td class="hinge"><%= line.hinging %></td>
+				<td class="fel"><%= line.fin_left %></td>
+				<td class="fer"><%= line.fin_right %></td>
+				<td><%= line.width %></td>
+				<td><%= line.height %></td>
+				<td><%= line.depth %></td>
+				<td><%= line.price %></td>
+				<td>
+					<button type="button" class="btn btn-primary mb-1 edit-button">Edit</button>
+					<form class="delete-line-form" id="delete-line-form" name="delete-line-form" action="/projects/<%= projectDetails[0]._id %>/rooms/<%= roomId %>/orders/<%= orderId %>/lines/<%= line.id %>" method="POST">
+						<button type="submit" class="btn btn-primary mb-1">Delete</button>
+					</form>
+					<button type="button" class="toggle-mod btn btn-primary">Accessory/Mod</button>
+				</td>
+			</tr>
+			<% if (line.notes) { %>
+				<tr class="note-line">
+					<td></td>
+					<td>Notes:</td>
+					<td colspan="7" class="notes"><%= line.notes %></td>
+					<td colspan="2"></td>
+				</tr>
+			<% } else { %>
+				<tr class="note-line" style="display: none"></tr>
+			<% } %>
+				<tr class="edit-cabinet-row">
+					<td>
+						<%= line.product.cabtype.code %><%= line.product.configuration %><br>
+						<%= line.product._id %>
+						<select name="product" class="product-select" value="<%= line.product._id %>">
+							<% products.forEach(function(product) { %>
+								<% var selected = ( product._id == String(line.product._id) ) ? "selected" : ""; %>
+								<option value="<%= product._id %>" <%= selected %>>
+										<%= product.cabtype.code %><%= product.configuration %>-<%= product.title %>
+								</option>
+							<% }) %>
+						</select>
+					</td>
+					<td></td>
+					<td><input type="number" id="inputQuantity" name="quantity" step="1" required value="<%= line.quantity %>"/></td>
+					<td>
+						<%= line.hinging %>
+						<select name="hinging" class="inputHinge" >
+							<option default></option>
+							<option value="L">Left</option>
+							<option value="R">Right</option>
+						</select>
+					</td>
+					<td>
+						<%= line.fin_left %>
+						<select name="fin_left" class="inputFEL">
+							<option value="UN">Unfinished</option>
+							<option value="FE">Finished</option>
+							<option value="AP">Applied Panel</option>
+							<option value="AD">Applied Door</option>
+							<option value="PL">Panelized end</option>
+						</select>
+					</td>
+					<td>
+						<%= line.fin_right %>
+						<select name="fin_right" class="inputFER" value="<%= line.fin_right %>">
+							<option value="UN">Unfinished</option>
+							<option value="FE">Finished</option>
+							<option value="AP">Applied Panel</option>
+							<option value="AD">Applied Door</option>
+							<option value="PL">Panelized end</option>
+						</select>
+					</td>
+					<td><input id="inputWidth" type="number" name="width" step="0.25" required value="<%= line.width %>"/></td>
+					<td><input id="inputHeight" type="number" name="height" step="0.25" required value="<%= line.height %>"/></td>
+					<td><input id="inputDepth" type="number" name="depth" step="0.25" required value="<%= line.depth %>"/></td>
+					<td></td>
+					<td>
+						<form action="/projects/<%= projectDetails[0]._id %>/rooms/<%= roomId %>/orders/<%= orderId %>/lines/<%= line.id %>" id="edit-line-form" class="edit-line-form" method="POST">
+							<button class="btn btn-primary mb-1">Update Line</button>
+						</form>
+					</td>
+				</tr>
+				<tr class="edit-notes-row">
+					<td></td>
+					<td>Notes:</td>
+					<td colspan="7">
+						<textarea name="notes" id="inputNote" cols="65" ><%= line.notes %></textarea>
+					</td>
+					<td colspan="2"></td>
+				</tr>
+				<% line.sublines.forEach(function(subline) { %>
+					<tr class="mod-line">
+						<td class="subline">
+							&nbsp&nbsp+<%= String(subline.product).split(/'/)[1] %><%= String(subline.product).split(/'/)[5] %><br>	
+							ProductId: <span class="productId"><%= subline.product._id %></span><br>
+							SublineId: <span class="sublineId"><%= subline._id %></span>
+						</td>
+						<td><%= String(subline.product).split(/'/)[7] %></td>
+						<td><span class="quantity"><%= subline.quantity %></span></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td><span class="width"><%= subline.width %></span></td>
+						<td><span class="height"><%= subline.height %></span></td>
+						<td><span class="depth"><%= subline.depth %></span></td>
+						<td></td>
+						<td>
+							<button type="button" class="btn btn-primary mb-1 edit-subline-button">Edit</button>
+							<form class="delete-subline-form" id="delete-subline-form" name="delete-subline-form" action="/projects/<%= projectDetails[0]._id %>/rooms/<%= roomId %>/orders/<%= orderId %>/lines/<%= line.id %>/sublines/<%= subline._id %>" method="POST">
+							<button type="submit" class="btn btn-primary">Delete</button>
+						</form></td>
+					</tr>
+					<% if (subline.notes) { %>
+						<tr class="mod-note-line">
+							<td></td>
+							<td>Notes:</td>
+							<td colspan="7" class="subline-note"><%= subline.notes %></td>
+							<td colspan="2"></td>
+						</tr>
+					<% } else { %>
+						<tr class="mod-note-line" style="display: none"></tr>
+					<% } %>
+					<tr class="edit-mod-line">
+						<td>
+							<i>Modification/Accessory:</i><br>
+							<span class="sublineId"><%= subline._id %></span><br>
+							<span class="productId"><%= subline.product._id %></span>
+						</td>
+						<td>
+							<select name="product" class="product-select">
+								<% products.forEach(function(product) { %>
+									<option value="<%= product._id %>"><%= product.cabtype.code %><%= product.configuration %>-<%= product.title %></option>
+								<% }) %>
+							</select>
+						</td>
+						<td><input type="number" id="inputModQuantity" name="quantity" step="1" required /></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td><input id="inputModWidth" type="number" name="width" step="0.25" required /></td>
+						<td><input id="inputModHeight" type="number" name="height" step="0.25" required /></td>
+						<td><input id="inputModDepth" type="number" name="depth" step="0.25" required /></td>
+						<td></td>
+						<td>
+							<form class="edit-mod-form" id="edit-mod-form" name="edit-mod-form" action="/projects/<%= projectDetails[0]._id %>/rooms/<%= roomId %>/orders/<%= orderId %>/lines/<%= line.id %>/sublines/<%= subline._id %>" method="POST">
+								<button type="submit" class="btn btn-primary mb-1">Revise</button>
+							</form>
+						</td>
+					</tr>
+					<tr class="edit-mod-note-line">
+						<td></td>
+						<td>Note:</td>
+						<td colspan="7"><textarea name="notes" id="inputModNote" cols="65"></textarea></td>
+						<td colspan="2"></td>
+					</tr>
+				<% }) %>
+				<tr class="add-mod">
+					<td><i>Modification/Accessory:</i><br><span class="lineId"><%= line.id %></span></td>
+					<td>
+						<select name="product" class="product-select">
+							<% line.product.mods.forEach(function(mod) { %>
+								<option value="<%= mod._id %>"><%= mod.cabtype.code %><%= mod.configuration %>-<%= mod.title %></option>
+							<% }) %>
+						</select>
+					</td>
+					<td><input type="number" id="inputModQuantity" name="quantity" step="1" required /></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><input id="inputModWidth" type="number" name="width" step="0.25" required /></td>
+					<td><input id="inputModHeight" type="number" name="height" step="0.25" required /></td>
+					<td><input id="inputModDepth" type="number" name="depth" step="0.25" required /></td>
+					<td></td>
+					<td>
+						<form class="add-mod-form" id="add-mod-form" name="add-mod-form" action="/projects/<%= projectDetails[0]._id %>/rooms/<%= roomId %>/orders/<%= orderId %>/lines/<%= line.id %>/sublines" method="POST">
+							<button type="submit" class="btn btn-primary mb-1">Add</button>
+						</form>
+						<button type="button" class="toggle-mod-note btn btn-primary">Note</button>
+					</td>
+				</tr>
+				<tr class="add-mod-note">
+					<td></td>
+					<td>Note:</td>
+					<td colspan="7"><textarea name="notes" id="inputModNote" cols="65"></textarea></td>
+					<td colspan="2"></td>
+				</tr>
+			<% }); %>
+			<form class="add-cab-form" id="add-cab-form" name="add-cab-form">
+				<tr class="add-line">
+					<td>
+						<select name="product" class="product-select">
+							<% products.forEach(function(product) { %>
+								<option value="<%= product._id %>"><%= product.cabtype.code %><%= product.configuration %>-<%= product.title %></option>
+							<% }) %>
+						</select>
+					</td>
+					<td></td>
+					<td><input type="number" id="inputQuantity" name="quantity" step="1" required /></td>
+					<td>
+						<select name="hinging" id="inputHinge">
+							<option default></option>
+							<option value="L">Left</option>
+							<option value="R">Right</option>
+						</select>
+					</td>
+					<td>
+						<select name="fin_left" id="inputFEL">
+							<option value="UN" selected>Unfinshed</option>
+							<option value="FE">Finished</option>
+							<option value="AP">Applied Panel</option>
+							<option value="AD">Applied Door</option>
+							<option value="PL">Panelized end</option>
+						</select>
+					</td>
+					<td>
+						<select name="fin_right" id="inputFER">
+							<option value="UN" selected>Unfinshed</option>
+							<option value="FE">Finished</option>
+							<option value="AP">Applied Panel</option>
+							<option value="AD">Applied Door</option>
+							<option value="PL">Panelized end</option>
+						</select>
+					</td>
+					<td><input id="inputWidth" type="number" name="width" step="0.25" required /></td>
+					<td><input id="inputHeight" type="number" name="height" step="0.25" required /></td>
+					<td><input id="inputDepth" type="number" name="depth" step="0.25" required /></td>
+					<td></td>
+					<td>
+						<input type="submit" value="Add" form="add-cab-form" class="btn btn-primary mb-1">
+						<button type="button" id="toggle-note" class="btn btn-primary">Note</button>
+					</td>
+				</tr>
+				<tr class="add-notes-row">
+					<td></td>
+					<td>Notes:</td>
+					<td colspan="7"><textarea name="notes" id="inputNote" cols="65"></textarea></td>
+					<td colspan="2"></td>
+				</tr>
+			</form>
+		</tbody>
+	</table>
+
+
+<script>
+var td = '<%= order.topdrawer %>';
+	if(td ==='slab'){
+		console.log('<%= order.topdrawer %>');
+		$('#slab').prop("checked", true);
+	} else if(td === 'deco') {
+		$('#deco').prop("checked", true);
+	};
+	
+	$("input:checkbox").on('click', function() {
+	  // in the handler, 'this' refers to the box clicked on
+	  var $box = $(this);
+	  if ($box.is(":checked")) {
+		// the name of the box is retrieved using the .attr() method
+		// as it is assumed and expected to be immutable
+		var group = "input:checkbox[name='" + $box.attr("name") + "']";
+		// the checked state of the group/box on the other hand will change
+		// and the current value is retrieved using .prop() method
+		$(group).prop("checked", false);
+		$box.prop("checked", true);
+	  } else {
+		$box.prop("checked", false);
+	  }
+	});
+	$(function() {
+    	var woodSelected="<%= order.wood %>"; 
+    	$("#Wood").val(woodSelected);
+	});
+	$(function() {
+    	var constructionSelected="<%= order.construction %>"; 
+    	$("#Construction").val(constructionSelected);
+	});
+	$(function() {
+    	var interiorSelected="<%= order.interior %>"; 
+    	$("#Interior").val(interiorSelected);
+	});
+	$(function() {
+    	var drawerboxSelected="<%= order.drawerbox %>"; 
+    	$("#Drawerbox").val(drawerboxSelected);
+	});
+	$(function() {
+    	var doorSelected="<%= order.door %>"; 
+    	$("#Door").val(doorSelected);
+	});
+	$(function() {
+    	var hingeSelected="<%= order.hinge %>"; 
+    	$("#Hinge").val(hingeSelected);
+	});
+	$(function() {
+    	var guideSelected="<%= order.guide %>"; 
+    	$("#Guide").val(guideSelected);
+	});
+	$(function() {
+    	var finishSelected="<%= order.finish %>"; 
+    	$("#Finish").val(finishSelected);
+	});
+</script>
+
+
+

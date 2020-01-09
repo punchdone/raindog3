@@ -1,0 +1,78 @@
+<% layout('layouts/boilerplate') %>
+
+<h1>
+	New Order
+</h1>
+
+<form action="/orders" method="POST">
+	
+				<div>
+					Wood/Material:
+						<select name="wood">
+						<% woods.forEach(function(wood) { %>
+							<option value="<%= wood._id %>"><%= wood.title %></option>
+						<% }) %>
+						</select>
+				</div>
+				<div>
+					Construction:
+						<select name="construction">
+						<% constructions.forEach(function(construction) { %>
+							<option value="<%= construction._id %>"><%= construction.title %></option>
+						<% }) %>
+						</select>
+				</div>
+				<div>
+					Interior:
+						<select name="interior">
+						<% interiors.forEach(function(interiors) { %>
+							<option value="<%= interiors._id %>"><%= interiors.title %></option>
+						<% }) %>
+						</select>
+				</div>
+				<div>
+					Drawerbox:
+						<select name="drawerbox">
+						<% drawerboxes.forEach(function(drawerbox) { %>
+							<option value="<%= drawerbox._id %>"><%= drawerbox.title %></option>
+						<% }) %>
+						</select>
+				</div>
+				<div>
+					Door:
+						<select name="door">
+						<% doors.forEach(function(door) { %>
+							<option value="<%= door._id %>"><%= door.title %></option>
+						<% }) %>
+						</select>
+				</div>
+				<div>
+					Hinge:
+						<select name="hinge">
+						<% hinges.forEach(function(hinge) { %>
+							<option value="<%= hinge._id %>"><%= hinge.title %></option>
+						<% }) %>
+						</select>
+				</div>
+				<div>
+					Guides:
+						<select name="guide">
+						<% guides.forEach(function(guide) { %>
+							<option value="<%= guide._id %>"><%= guide.title %></option>
+						<% }) %>
+						</select>
+				</div>
+				<div>
+					Finish:
+						<select name="finish">
+						<% finishes.forEach(function(finish) { %>
+							<option value="<%= finish._id %>"><%= finish.title %></option>
+						<% }) %>
+						</select>
+				</div>
+	
+	<input type="submit">
+</form>
+
+
+

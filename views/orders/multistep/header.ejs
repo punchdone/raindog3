@@ -1,0 +1,85 @@
+<% layout('layouts/order-multi-new-layout') %>
+
+<form id="step-header" action="/projects/<%= project[0]._id %>/rooms/<%= room[0]._id %>/orders/multi" method="POST">
+
+<h1>Order Header:</h1>
+
+<!-- One "tab" for each step in the form: -->
+<div class="tab">
+	<h3>Pick your door style:</h3><br>
+	<% doors.forEach(function(door) { %>
+		<div class="card">
+			<input type="checkbox" name="door" value="<%= door.id %>" /><%= door.title %>
+			<a href="/doors/<%= door._id %>">more info</a>
+		</div>
+	<% }) %>
+	<hr>
+	<h3>Pick your top drawer style:</h3>
+	<div class="d-flex">
+		<div class="row">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<div class="card col-md-6 col-sm-12 p-0 mb-2">
+							<div class="card-body">
+								<h5 class="card-body">Slab Top Drawers</h5>
+								<p class="card-text">Clean, contemporary:  Other drawers will be same style as doors</p>
+								<input type="radio" name="topdrawer" value="slab" />
+							</div>
+						</div>
+						<div class="card">
+							<div class="card-body">
+								<h5 class="card-body">5-Piece Top Drawers</h5>
+								<p class="card-text">Traditional, consistent: Top drawers will have cut down top and botto rails, but the style will match the doors</p>
+
+								<input type="radio" name="topdrawer" value="deco" />
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>
+	</div>
+</div>
+		
+
+<div class="tab">Material:
+  	<% woods.forEach(function(wood) { %>
+		<input type="checkbox" name="wood" value="<%= wood.id %>" /><%= wood.title %>
+	<% }) %>
+</div>
+
+<div class="tab">Finish:
+  	<% finishes.forEach(function(finish) { %>
+		<input type="checkbox" name="finish" value="<%= finish.id %>" /><%= finish.title %>
+	<% }) %>
+</div>
+
+<div class="tab">Interior:
+  	<% interiors.forEach(function(interior) { %>
+		<input type="checkbox" name="interior" value="<%= interior.id %>" /><%= interior.title %>
+	<% }) %>
+</div>
+	
+<div class="tab">Hardware:
+		<input type="checkbox" name="hardware" value="pro">Pro Series
+		<input type="checkbox" name="hardware" value="blum">Blum
+</div>
+
+<div style="overflow:auto;">
+  <div style="float:right;">
+    <button type="button" class="btn btn-primary" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+    <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextPrev(1)">Next</button>
+  </div>
+</div>
+
+<!-- Circles which indicates the steps of the form: -->
+<div style="text-align:center;margin-top:40px;">
+  	<span class="step"></span>
+  	<span class="step"></span>
+  	<span class="step"></span>
+  	<span class="step"></span>
+	<span class="step"></span>
+</div>
+
+</form>
+
+<script src="/javascripts/order-multi-new.js"></script>

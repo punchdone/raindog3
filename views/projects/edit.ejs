@@ -1,0 +1,30 @@
+<% layout('layouts/boilerplate') -%>
+
+<h1>
+	Edit Project!
+</h1>
+
+<form action="/projects/<%= project.id %>?_method=PUT" method="POST" id="projectEditForm" enctype="multipart/form-data">
+	
+	<div><input type="text" name="project[title]" placeholder="Title" value="<%= project.title %>"></div>
+	<div><input type="text" name="project[channel]" placeholder="Channel" value="<%= project.channel %>"></div>
+	<div><textarea name="project[description]" placeholder="Description"><%= project.description %></textarea>
+	<div>
+		<input type="file" id="imageUpload" accept="images/*" name="images" multiple />
+		<div>
+			<% project.images.forEach(function(image, i) { %>
+			<img src="<%= image.url %>" width="100px" />
+			<label for="image<%= i %>">Delete?</label>
+			<input type="checkbox" name="deleteImages[]" class="imageDeleteCheckbox" id="image<%= i %>" value="<%= image.public_id %>">
+			<% }); %>
+		</div>
+		
+	</div>
+	</div>
+		<div><input type="text" name="project[location]" placeholder="Location" value="<%= project.location %>">	
+	</div>
+	
+	<input type="submit">
+</form>
+
+<script src="/javascripts/project-edit.js"></script>

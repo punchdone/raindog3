@@ -1,0 +1,228 @@
+<% layout('layouts/order-show-layout') %>
+
+<h1>
+	Order
+</h1>
+
+<form action="/projects/<%= projectDetails[0]._id %>/rooms/<%= roomDetails[0]._id %>/orders/<%= order.id %>?_method=PUT" method="POST">
+	
+				Order #:  <%= order.orderId %><br>
+				Proposal #: <%= projectDetails[0].projectId %>-<%= roomDetails[0].room_number.toString().padStart(2, '0') %><br>
+				Project Name: <%= projectDetails[0].channel %>/<%= projectDetails[0].title %><br>
+				Room/Spec Group:  <%= roomDetails[0].room_name %><br>
+				<hr>
+				Project Id:  <%= projectDetails[0]._id %><br>
+				Room Id:  <%= roomDetails[0]._id %><br>
+				Order Id: <%= order.id %><br>
+				<hr>
+				<div>
+					Wood/Material:
+						<select name="wood" id="Wood">
+						<% woods.forEach(function(wood) { %>
+							<option value="<%= wood._id %>"><%= wood.title %></option>
+						<% }) %>
+						</select>
+				</div>
+				<div>
+					Construction:
+						<select name="construction" id="Construction">
+						<% constructions.forEach(function(construction) { %>
+							<option value="<%= construction._id %>"><%= construction.title %></option>
+						<% }) %>
+						</select>
+				</div>
+				<div>
+					Interior:
+						<select name="interior" id="Interior">
+						<% interiors.forEach(function(interiors) { %>
+							<option value="<%= interiors._id %>"><%= interiors.title %></option>
+						<% }) %>
+						</select>
+				</div>
+				<div>
+					Drawerbox:
+						<select name="drawerbox" id="Drawerbox">
+						<% drawerboxes.forEach(function(drawerbox) { %>
+							<option value="<%= drawerbox._id %>"><%= drawerbox.title %></option>
+						<% }) %>
+						</select>
+				</div>
+				<div>
+					Door:
+						<select name="door" id="Door">
+						<% doors.forEach(function(door) { %>
+							<option value="<%= door._id %>"><%= door.title %></option>
+						<% }) %>
+						</select>
+				</div>
+				<div>
+					Hinge:
+						<select name="hinge" id="Hinge">
+						<% hinges.forEach(function(hinge) { %>
+							<option value="<%= hinge._id %>"><%= hinge.title %></option>
+						<% }) %>
+						</select>
+				</div>
+				<div>
+					Guides:
+						<select name="guide" id="Guide">
+						<% guides.forEach(function(guide) { %>
+							<option value="<%= guide._id %>"><%= guide.title %></option>
+						<% }) %>
+						</select>
+				</div>
+				<div>
+					Finish:
+						<select name="finish" id="Finish">
+						<% finishes.forEach(function(finish) { %>
+							<option value="<%= finish._id %>"><%= finish.title %></option>
+						<% }) %>
+						</select>
+				</div>
+	<input type="submit" value="Confirm Selections">
+</form>
+	<a href='/projects/<%= projectDetails[0]._id %>'>
+		<button>
+			Return to Project
+		</button>	
+	</a>
+<!-- Display the order lines here -->
+	<div class="order-lines">
+		<h2>
+			Order Lines:
+		</h2>
+		<div>
+			<% order.lines.forEach(function(line) { %>
+				Line Id: <%= line._id %><br>
+				Cabinet Type: <%= line.cab_type %>
+				Configuration: <%= line.configuration %>
+				Quantity: <%= line.quantity %>
+				FEL: <%= line.fin_left %>
+				FER: <%= line.fin_right %>
+				Width: <%= line.width %>
+				Height: <%= line.height %>
+				Depth: <%= line.depth %>
+				<button class="toggle-edit-line-form">Edit</button><br>
+				Notes: <%= line.notes %><br>
+				<form action="/projects/<%= projectDetails[0]._id %>/rooms/<%= roomDetails[0]._id %>/orders/<%= order.id %>/lines/<%= line._id %>?_method=PUT" method="POST" class="edit-line-form">
+					Cabinet Type:  <input type="text" name="line[cab_type]" required /><br>
+					Configuration: <input type="text" name="line[configuration]" required /><br>
+					Quantity: <input type="number" name="line[quantity]" step="1" required /><br>
+					FEL: <select name="line[fin_left]" id="line[fin_left]">
+						<option value="UN" selected>Unfinshed</option>
+						<option value="FE">Finished</option>
+						<option value="AP">Applied Panel</option>
+						<option value="AD">Applied Door</option>
+						<option value="PL">Panelized end</option>
+					</select>
+					FER: <select name="line[fin_right]" id="line[fin_right]">
+						<option value="UN" selected>Unfinshed</option>
+						<option value="FE">Finished</option>
+						<option value="AP">Applied Panel</option>
+						<option value="AD">Applied Door</option>
+						<option value="PL">Panelized end</option>
+					</select><br>
+					Width: <input type="number" name="line[width]" step="0.25" required /><br>
+					Height: <input type="number" name="line[height]" step="0.25" required /><br>
+					Depth: <input type="number" name="line[depth]" step="0.25" required /><br>
+					Notes: <textarea name="line[notes]"></textarea><br>
+					<input type="submit" value="Update">
+				</form>
+				Sublines:<br>
+					<% line.sublines.forEach(function(subline) { %>
+						Subline Id: <%= subline._id %> => Cabinet Type: <%= subline.cab_type %> Configuration: <%= subline.configuration %> Qty: <%= subline.quantity %> <%= subline.width %>"Wx<%= subline.height %>"Hx<%= subline.depth %>"D<button class="toggle-edit-subline-form">Edit</button><br>
+							<form action="/projects/<%= projectDetails[0]._id %>/rooms/<%= roomDetails[0]._id %>/orders/<%= order.id %>/lines/<%= line._id %>/sublines?_method=PUT" method="POST" class="edit-subline-form">
+								Cabinet Type: <input type="text" name="cab_type"><br>
+								Configuration: <input type="text" name="configuration"><br>
+								Quantity: <input type=number name="quantity"><br>
+								Width: <input type=number name="width" step="0.25"><br>
+								Height: <input type=number name="height" step="0.25"><br>
+								Depth: <input type=number name="depth" step="0.25"><br>
+								<input type="submit" value="Mod Update">
+							</form>
+					  <% }); %>
+				
+				<button class="toggle-new-subline-form">
+					Add Mod/Accessory
+				</button>
+				
+				<form action="/projects/<%= projectDetails[0]._id %>/rooms/<%= roomDetails[0]._id %>/orders/<%= order.id %>/lines/<%= line._id %>/sublines?" method="POST" class="new-subline-form">
+					Cabinet Type: <input type="text" name="cab_type"><br>
+					Configuration: <input type="text" name="configuration"><br>
+					Quantity: <input type=number name="quantity"><br>
+					Width: <input type=number name="width" step="0.25"><br>
+					Height: <input type=number name="height" step="0.25"><br>
+					Depth: <input type=number name="depth" step="0.25"><br>
+					<input type="submit" value="New Mod">
+				</form>
+				<hr>
+			<% }); %>
+		</div>
+		<h2>
+			Add Product/Configuration:
+		</h2>
+		<div>
+			<form action="/projects/<%= projectDetails[0]._id %>/rooms/<%= roomDetails[0]._id %>/orders/<%= order.id %>/lines" method="POST">
+				Cabinet Type:  <input type="text" name="line[cab_type]" required /><br>
+				Configuration: <input type="text" name="line[configuration]" required /><br>
+				Quantity: <input type="number" name="line[quantity]" step="1" required /><br>
+				FEL: <select name="line[fin_left]" id="line[fin_left]">
+						<option value="UN" selected>Unfinshed</option>
+						<option value="FE">Finished</option>
+						<option value="AP">Applied Panel</option>
+						<option value="AD">Applied Door</option>
+						<option value="PL">Panelized end</option>
+					</select>
+				FER: <select name="line[fin_right]" id="line[fin_right]">
+						<option value="UN" selected>Unfinshed</option>
+						<option value="FE">Finished</option>
+						<option value="AP">Applied Panel</option>
+						<option value="AD">Applied Door</option>
+						<option value="PL">Panelized end</option>
+					</select><br>
+				Width: <input type="number" name="line[width]" step="0.25" required /><br>
+				Height: <input type="number" name="line[height]" step="0.25" required /><br>
+				Depth: <input type="number" name="line[depth]" step="0.25" required /><br>
+				Notes: <textarea name="line[notes]"></textarea><br>
+				<input type="submit" value="Add Item">
+			</form>
+		</div>
+	</div>
+
+<script>
+	$(function() {
+    	var woodSelected="<%= order.wood %>"; 
+    	$("#Wood").val(woodSelected);
+	});
+	$(function() {
+    	var constructionSelected="<%= order.construction %>"; 
+    	$("#Construction").val(constructionSelected);
+	});
+	$(function() {
+    	var interiorSelected="<%= order.interior %>"; 
+    	$("#Interior").val(interiorSelected);
+	});
+	$(function() {
+    	var drawerboxSelected="<%= order.drawerbox %>"; 
+    	$("#Drawerbox").val(drawerboxSelected);
+	});
+	$(function() {
+    	var doorSelected="<%= order.door %>"; 
+    	$("#Door").val(doorSelected);
+	});
+	$(function() {
+    	var hingeSelected="<%= order.hinge %>"; 
+    	$("#Hinge").val(hingeSelected);
+	});
+	$(function() {
+    	var guideSelected="<%= order.guide %>"; 
+    	$("#Guide").val(guideSelected);
+	});
+	$(function() {
+    	var finishSelected="<%= order.finish %>"; 
+    	$("#Finish").val(finishSelected);
+	});
+</script>
+
+
+

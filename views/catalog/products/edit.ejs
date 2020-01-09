@@ -1,0 +1,137 @@
+<% layout('layouts/boilerplate') -%>
+
+<div class="container">
+	
+
+	<form action="/catalog/products/<%= product._id %>?_method=PUT" method="POST" id="productEditForm" enctype="multipart/form-data">
+	
+		<!-- Header -->
+		<h1>
+			<input type="text" name="title" value="<%= product.title %>">
+		</h1>
+		<h3>
+			<input type="text" name="config_code" value="<%= product.cabtype.code %><%= product.configuration %>">
+		</h3>
+	
+		<!-- Images -->
+		<div>
+			<input type="file" id="imageUpload" accept="images/*" name="images" multiple />
+			<div>
+				<% product.images.forEach(function(image, i) { %>
+				<img src="<%= image.url %>" width="100px" />
+				<label for="image<%= i %>">Delete?</label>
+				<input type="checkbox" name="deleteImages[]" class="imageDeleteCheckbox" id="image<%= i %>" value="<%= image.public_id %>">
+				<% }); %>
+			</div>
+		</div>
+	
+		<!-- Cabinet Specifications -->
+		<br>
+		Hinging Required: <input type="checkbox" id="Hinging" name="hinging" <%= product.hinging ? "checked" : "" %> />
+		<hr>
+		<div>
+			<h2>
+				Dimensions
+			</h2><br>
+			<table>
+				<tr>
+					<th></th>
+					<th>Width</th>
+					<th>Height</th>
+					<th>Depth</th>
+				</tr>
+				<tr>
+					<td>Standard</td>
+					<td><input type="number" name="widthstd" value="<%= product.widthstd %>"></td>
+					<td><input type="number" name="heightstd" value="<%= product.heightstd %>"></td>
+					<td><input type="number" name="depthstd" value="<%= product.depthstd %>"></td>
+				</tr>
+				<tr>
+					<td>Fix Dimension</td>
+					<td><input type="checkbox" id="widthfix" name="widthfix" <%= product.widthfix ? "checked" : "" %> /></td>
+					<td><input type="checkbox" id="heightfix" name="heightfix" <%= product.heightfix ? "checked" : "" %> /></td>
+					<td><input type="checkbox" name="depthfix" id="depthfix" <%= product.depthfix ? "checked" : "" %> /></td>
+				</tr>
+				<tr>
+					<td>Minimum</td>
+					<td><input type="number" name="widthmin" value="<%= product.widthmin %>"></td>
+					<td><input type="number" name="heightmin" value="<%= product.heightmin %>"></td>
+					<td><input type="number" name="depthmin" value="<%= product.depthmin %>"></td>
+				</tr>
+				<tr>
+					<td>Maximum</td>
+					<td><input type="number" name="widthmax" value="<%= product.widthmax %>"></td>
+					<td><input type="number" name="heightmax" value="<%= product.heightmax %>"></td>
+					<td><input type="number" name="depthmax" value="<%= product.depthmax %>"></td>
+				</tr>
+			</table>
+		</div>
+		<hr>
+			Top Drawer (Qty): <input type="number" name="topdrawer" value="<%= product.topdrawer %>"><br>
+			Lower Drawer (Qty): <input type="number" name="lowerdrawer" value="<%= product.lowerdrawer %>"><br>
+			Door (Qty): <input type="number" name="door" value="<%= product.door %>"><br>
+			Shelves (Qty): <input type="number" name="shelves" value="<%= product.shelves %>"><br>
+			Partitions (Qty): <input type="number" name="partitions" value="<%= product.partitions %>"><br>
+			Finished Interior: <input type="checkbox" id="finint" name="finint" <%= product.finint ? "checked" : "" %> /><br>
+			Face Frame: <input type="checkbox" id="faceframe" name="faceframe" <%= product.faceframe ? "checked" : "" %>/><br>
+			Faces (Qty): <input type="number" name="faces" value="<%= product.faces %>"><br>
+			Angles (Qty): <input type="number" name="angles" value="<%= product.angles %>"><br>
+			Price: <input type="number" min="0.00" step="any" name="price" value="<%= product.price %>"><br>
+			Notes:<br>
+			<textarea name="notes" rows="4" cols="60"><%= product.notes %></textarea><br>
+		<hr>
+		<input class="btn btn-primary" type="submit" value="Update Product">
+	</form>
+		<hr>
+	
+		<!-- Modifications -->
+		Available modifications and accessories:<br>
+		<div>
+			<ul>
+				<% product.mods.forEach(function(mod) { %>
+					<li><%= mod.cabtype.code %><%= mod.configuration %> - <%= mod.title %>
+						<form action="/catalog/products/<%= product.id %>/mods/<%= mod._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+							<input type="submit" class="btn btn-secondary btn-sm" value="Delete Accessory">
+						</form>
+					</li>
+				<% }) %>
+			</ul>
+			<form action="/catalog/products/<%= product._id %>/mods?_method=PUT" method="POST" id="accessoryAddForm">
+				<select name="mods" class="custom-select" multiple>
+					<% accessories.forEach(function(accessory) { %>
+						<option value="<%= accessory.id %>"><%= accessory.title %></option>
+					<% }) %>
+				</select>
+				<input class="btn btn-primary mt-2" type="submit" value="Add Mod/Accessory">
+			</form>
+
+		</div>
+</div>
+
+<script>
+	$(function() {
+    	var hingeSelected="<%= product.hinging %>"; 
+    	$("#Hinging").val(hingeSelected);
+	});
+	$(function() {
+    	var widthSelected="<%= product.widthfix %>"; 
+    	$("#widthfix").val(widthSelected);
+	});
+	$(function() {
+    	var heightSelected="<%= product.heightfix %>"; 
+    	$("#heightfix").val(heightSelected);
+	});$(function() {
+    	var depthSelected="<%= product.depthfix %>"; 
+    	$("#depthfix").val(depthSelected);
+	});
+	});$(function() {
+    	var finintSelected="<%= product.finit %>"; 
+    	$("#finit").val(finintSelected);
+	});
+	});$(function() {
+    	var faceframeSelected="<%= product.faceframe %>"; 
+    	$("#faceframe").val(faceframeSelected);
+	});
+</script>
+
+<script src="/javascripts/product-edit.js"></script>

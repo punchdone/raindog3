@@ -1,0 +1,37 @@
+<% layout('layouts/boilerplate') -%>
+
+<div class="container mt-3">
+	<h1>
+		<%= title %>
+	</h1>
+
+	<a href="/catalog/products/new">
+			<button class="btn btn-primary">
+				New Product
+			</button>	
+	</a>
+	
+	<hr>
+
+	<div class="d-flex">
+			<div class="row">			
+				<% products.forEach(function(product) { %>
+					<div class="col-lg-2 col-md-3 col-sm-4 p-0 mb-2">
+						<div class="card m-2 h-100">
+							<img src="<%= String(product.images).split(/'/)[1] %>" class="card-img-top" height="150" alt="">
+							<div class="card-body p-2">
+								<%= product.cabtype.code %><%= product.configuration %><br>
+								<%= product.title %><br>
+								<div style="text-align: center">
+									<a href="/catalog/products/<%= product.id %>" class="btn btn-link btn-sm">View More</a>
+									<a href="/catalog/products/<%= product.id %>/select" class="btn btn-primary btn-sm">Add to List</a>
+										
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				<% }); %>
+			</div>																					  				
+	</div>
+</div>

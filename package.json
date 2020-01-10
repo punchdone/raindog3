@@ -6,7 +6,8 @@
     "start": "node ./bin/www"
   },
   "engines": {
-    "node": "12.14.0"
+    "node": "12.14.0",
+    "npm": "6.13.4"
   },
   "dependencies": {
     "@mapbox/mapbox-sdk": "^0.7.0",
